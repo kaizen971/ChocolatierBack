@@ -44,12 +44,12 @@ async function createUser(firstName, lastName, email, password, passwordConfirm)
     firstName,
     lastName,
     email,
-    password: password,
+    password: passwordHash,
   });
 }
 
 async function checkUserCredentials(email, password) {
-  const user = await this.findOne({ email, password: password });
+  const user = await this.findOne({ email, password:  sha256(password) });
 
   if (!user) throw new Error(`Identifiants invalides ou utilisateur inexistant`);
 
