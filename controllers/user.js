@@ -7,6 +7,11 @@ export async function CreateUserController(req, res) {
     const newUser = await UserModel.createUser(firstName, lastName, email, password, passwordConfirm);
 
     res.status(200).send("Inscription réussie");
+    const loggedUser = await UserModel.checkUserCredentials(email, password);
+
+    // Saves user in session
+    req.session.user = loggedUser;
+    
   } catch ({ message: errorMessage }) {
     return res.status(400).send({ errorMessage, values: req.body });
   }
@@ -14,7 +19,7 @@ export async function CreateUserController(req, res) {
 
 export async function LoginUserController(req, res) {
   const { email, password } = req.body;
-  console.log(req.body);
+ 
 
 
   try {
@@ -27,4 +32,16 @@ export async function LoginUserController(req, res) {
 
     return res.status(400).send("failed login");
   }
+}
+
+
+export async function UserController(req,res){
+
+
+
+  return res.status(200).send("Authentification réussie");
+
+
+
+
 }
