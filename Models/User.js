@@ -6,12 +6,13 @@ const UserSchema = new mongoose.Schema({
   lastName: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
+  status:{type:String, required:true}
 });
 
 UserSchema.static('createUser', createUser);
 UserSchema.static('checkUserCredentials', checkUserCredentials);
 
-async function createUser(firstName, lastName, email, password, passwordConfirm) {
+async function createUser(firstName, lastName, email, password, passwordConfirm,status) {
   const errors = [];
 
   // Fields check
@@ -45,6 +46,7 @@ async function createUser(firstName, lastName, email, password, passwordConfirm)
     lastName,
     email,
     password: passwordHash,
+    status
   });
 }
 

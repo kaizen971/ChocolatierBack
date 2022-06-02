@@ -3,9 +3,9 @@ import {RecompenseModel} from '../Models/Recompense.js'
 
 export async function CreateUserController(req, res) {
   const { firstName, lastName, email, password, passwordConfirm } = req.body;
-  
+  let status = "client"
   try {
-    const newUser = await UserModel.createUser(firstName, lastName, email, password, passwordConfirm);
+    const newUser = await UserModel.createUser(firstName, lastName, email, password, passwordConfirm,status);
 
     res.status(200).send("Inscription réussie");
     const loggedUser = await UserModel.checkUserCredentials(email, password);
@@ -21,11 +21,6 @@ export async function CreateUserController(req, res) {
 export async function LoginUserController(req, res) {
   const { email, password } = req.body;
  
-  let firstName = "Severine"
-  let lastName = "Fuzely"
-  let recompense = ["Fondant"];
-  const newRecompense = await RecompenseModel.createRecompense(firstName, lastName, email,recompense);
-
   try {
     const loggedUser = await UserModel.checkUserCredentials(email, password);
     // Saves user in session
@@ -39,12 +34,5 @@ export async function LoginUserController(req, res) {
 
 
 export async function UserController(req,res){
-
-
-
   return res.status(200).send("Authentification réussie");
-
-
-
-
 }
