@@ -41,7 +41,7 @@ app.use(
 );
 app.use(express.static('public'));
 app.use(cors({
-  origin: 'https://plenty-pugs-invite-78-116-252-179.loca.lt',
+  origin: 'https://dirty-cycles-add-78-116-252-179.loca.lt',
   credentials:true
 }));
 app.use(express.json({limit:'1mb'}));

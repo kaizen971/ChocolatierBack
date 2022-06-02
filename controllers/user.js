@@ -14,7 +14,8 @@ export async function CreateUserController(req, res) {
     req.session.user = loggedUser;
     
   } catch ({ message: errorMessage }) {
-    return res.status(400).send({ errorMessage, values: req.body });
+    var erreur =  errorMessage 
+    return res.status(400).json(erreur);
   }
 }
 
