@@ -17,7 +17,7 @@ export async function InitStock(req, res) {
       console.log('Collection removed') 
    });
 
-    if(req.user?.status == "admin"){
+    if(req.session.user.status == "admin"){
     for(let i=0; i<patries.length;i++){
         let name = patries[i].name
         let number = patries[i].number
@@ -41,12 +41,12 @@ export async function DataDashboard(req, res){
     console.log("client")
 
     RecompenseModel.find({email:email}).then((response) =>{
-      res.status(200).send(response);
+      res.status(200).json({response : response, status:"client"});
     })
   }else if(req.session.user && req.session.user.status == "admin"){
     console.log("admin")
     RecompenseModel.find().then((response) =>{
-      res.status(200).send(response);
+      res.status(200).json({response : response , status : "admin"});
     })
   }
 }
@@ -128,7 +128,7 @@ export async function launchGame(req,res){
       if(req.session.user){
       switch(id_victory){
         default :
-          return(res.status(200).json(id_victory));
+          number_Random = 0;
         case 1 :
           number_Random = 1;
           break
@@ -160,15 +160,20 @@ export async function launchGame(req,res){
         var firstName = req.session.user.firstName;
         var lastName = req.session.user.lastName;
         var email = req.session.user.email;
-        RecompenseModel.createRecompense(firstName ,lastName,email,recompense);
+        return(RecompenseModel.createRecompense(firstName ,lastName,email,recompense));
         }).then( (response) =>{
+          if(listRewards.length >= 0){
           for(let i = 0 ; i < listRewards.length;i++){
             console.log(listRewards[i].name);
-           StockModel.updateOne({name:listRewards[i].name},{ $set: {"number" : listRewards[i].number - 1 }})
+           StockModel.updateOne({"name":listRewards[i].name},{ $set: {"number" : listRewards[i].number - 1 }}).then((respons)=>{
+            console.log(respons);
+           })
           }
-          res.status(200).json(id_victory);
+          }
         }
         )
+        
+        res.status(200).json({result:resultFinal, tableau:dicetab,number_Random:number_Random});
 
 
       }else{

@@ -40,7 +40,7 @@ app.use(
 );
 app.use(express.static('public'));
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://polite-geese-cut-78-116-252-179.loca.lt',
   credentials:true
 }));
 app.use(bodyParser.json());

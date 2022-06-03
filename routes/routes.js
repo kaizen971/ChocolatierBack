@@ -12,7 +12,7 @@ router.get('/user',authMiddleware, UserController )
 router.post('/subscribe', CreateUserController);
 router.post('/login', LoginUserController);
 router.get('/Dashboard',authMiddleware,DataDashboard)
-router.get('/Stock',InitStock)
+router.get('/Stock',authMiddleware,InitStock)
 router.get('/game',authMiddleware,launchGame)
 
 
