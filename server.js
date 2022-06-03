@@ -26,7 +26,6 @@ app.locals.pretty = NODE_ENV !== 'production'; // Indente correctement le HTML e
 // App middlewares
 // ==========
 
-
 app.use(morgan(NODE_ENV !== 'production' ? 'dev' : 'tiny'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
@@ -41,10 +40,10 @@ app.use(
 );
 app.use(express.static('public'));
 app.use(cors({
-  origin: 'https://dirty-cycles-add-78-116-252-179.loca.lt',
+  origin: 'http://localhost:3000',
   credentials:true
 }));
-app.use(express.json({limit:'1mb'}));
+app.use(bodyParser.json());
 app.use(flash());
 app.use((req, res, next) => {
   res.locals.flash = {
